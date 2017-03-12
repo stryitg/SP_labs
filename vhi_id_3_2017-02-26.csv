@@ -1,0 +1,17 @@
+import urllib.request
+from datetime import date
+
+
+def vhi_download(i):
+    url = "https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_provinceData.php?country=UKR&provinceID="+str(i)+"&year1=1981&year2=2017&type=Mean"
+    vhi_url = urllib.request.urlopen(url)
+    today = date.today()
+    today = date.__str__(today)
+    vhi_csv = "vhi_id_"+str(i)+"_"+today+"_"".csv"
+    out = open(vhi_csv,'wb')
+    out.write(vhi_url.read())
+    out.close()
+    print("success")        
+    
+for i in range(1,25):
+    vhi_download(i)
