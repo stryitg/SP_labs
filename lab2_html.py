@@ -13,6 +13,14 @@ class Tables(server.App):
                 "key" : 'index',
                 "action_id" : "update_data"},
 
+                { "type" : 'dropdown',
+                "label" : 'color',
+                "options" : [{"label": 'DarkGreen', "value": 'DarkGreen'},
+                            {"label" : 'DarkBlue', "value": 'DarkBlue'},],
+                "key" : 'color',
+                "action_id" : "update_data"},
+
+
               { "type" : 'dropdown',
                 "label" : 'region',
                 "options" : [{"label": 'Kyiv', "value": '1KYV'},
@@ -21,11 +29,11 @@ class Tables(server.App):
                 "key" : 'region',
                 "action_id" : "update_data"},
 
-              { "type":'text',
-                "label": 'year(from 1990-2010)',
-                "value" : '2000',
-                "key": 'year',
-                "action_id" : "update_data"},
+              ###{ "type":'text',
+              #  "label": 'year(from 1990-2010)',
+              #  "value" : '2000',
+              #  "key": 'year',
+              #  "action_id" : "update_data"},'''
 
               { "type":'text',
                 "label": 'first weak(from 1-40)',
@@ -37,7 +45,14 @@ class Tables(server.App):
                 "label": 'last weak(from 1-40)',
                 "value" : '40',
                 "key": 'weak2',
-                "action_id" : "update_data",}]
+                "action_id" : "update_data",},
+
+              { "type": 'slider',
+                "label":'year',
+                "key":"year" ,
+                "min": "1990",
+                "max": "2010",
+                "action_id": "update_data"}]
 
     controls = [{   "type" : "hidden",
                     "id" : "update_data"}]
@@ -62,7 +77,7 @@ class Tables(server.App):
         df = df[df['year'] == int(params['year'])]
         df = df[(df['weak'] <= int(params['weak2']))&(df['weak'] >= int(params['weak1']))]
 
-        plt_obj = df.plot(x='weak',y=params['index'])
+        plt_obj = df.plot(x='weak',y=params['index'],color=params['color'])
         plt_obj.set_ylabel(params['index'])
         plt_obj.set_xlabel('weak')
         fig = plt_obj.get_figure()
